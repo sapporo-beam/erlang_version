@@ -1,7 +1,7 @@
 erlang_version
 =====
 
-An OTP library
+Determine your Erlang/OTP full version like "18.1".
 
 Build
 -----
