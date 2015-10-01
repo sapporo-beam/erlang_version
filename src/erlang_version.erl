@@ -13,14 +13,16 @@
 %% API functions
 %%====================================================================
 version_to_binary() ->
-    string:join([major_version(), minor_version()], ".").
+    Major = major_version(),
+    Minor = minor_version(),
+    <<Major/binary, <<".">>/binary, Minor/binary>>.
 
 major_version() ->
-    erlang:system_info(otp_release).
+    list_to_binary(erlang:system_info(otp_release)).
 
 minor_version() ->
     [_, MinorPart] = string:tokens(erlang:system_info(version), "."),
-    MinorPart.
+    list_to_binary(MinorPart).
 
 %%====================================================================
 %% Internal functions
@@ -31,11 +33,11 @@ minor_version() ->
 %%====================================================================
 -ifdef(TEST).
 major_version_test() ->
-    ?assertEqual("18", major_version()).
+    ?assertEqual(<<"18">>, major_version()).
 
 minor_version_test() ->
-    ?assertEqual("1", minor_version()).
+    ?assertEqual(<<"1">>, minor_version()).
 
 version_to_binary_test() ->
-    ?assertEqual("18.1", version_to_binary()).
+    ?assertEqual(<<"18.1">>, version_to_binary()).
 -endif.
