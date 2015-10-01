@@ -12,7 +12,8 @@
 %%====================================================================
 %% API functions
 %%====================================================================
-version_to_binary() -> "18.1".
+version_to_binary() ->
+    string:join([major_version(), minor_version()], ".").
 
 major_version() ->
     erlang:system_info(otp_release).
