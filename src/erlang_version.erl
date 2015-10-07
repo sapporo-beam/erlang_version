@@ -13,16 +13,21 @@
 %% API functions
 %%====================================================================
 version_to_binary() ->
-    Major = major_version(),
-    Minor = minor_version(),
-    <<Major/binary, <<".">>/binary, Minor/binary>>.
+    % See also
+    % http://www.erlang.org/doc/system_principles/versions.html
+    % "Retrieving Current OTP Version"
+    Filepath = filename:join([code:root_dir(), "releases", erlang:system_info(otp_release), "OTP_VERSION"]),
+    {ok, Binary} = file:read_file(Filepath),
+    % Strip <<"\n">>
+    binary:part(Binary, 0, byte_size(Binary) - 1).
 
 major_version() ->
-    list_to_binary(erlang:system_info(otp_release)).
+    [Major, _ | _] = binary:split(version_to_binary(), <<".">>),
+    Major.
 
 minor_version() ->
-    [_, MinorPart] = string:tokens(erlang:system_info(version), "."),
-    list_to_binary(MinorPart).
+    [_, Minor | _] = binary:split(version_to_binary(), <<".">>),
+    Minor.
 
 %%====================================================================
 %% Internal functions
