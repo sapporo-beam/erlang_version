@@ -4,7 +4,8 @@
 -export([full/0,
          major/0,
          minor/0,
-         patch/0]).
+         patch/0,
+         parse/1]).
 
 %%====================================================================
 %% API functions
@@ -33,9 +34,19 @@ patch() ->
         true -> Patch
     end.
 
+parse(Bin) ->
+    case do_parse(Bin) of
+        [Major, Minor]        -> {Major, Minor, <<"">>};
+        [Major, Minor, Patch] -> {Major, Minor, Patch}
+    end.
+
 %%====================================================================
 %% Internal functions
 %%====================================================================
+do_parse([Major, Rest]) ->
+    [Major | binary:split(Rest, <<".">>)];
+do_parse(Bin) ->
+    do_parse(binary:split(Bin, <<".">>)).
 
 %%====================================================================
 %% Tests
@@ -69,6 +80,18 @@ minor_version_test() ->
 patch_version_test() ->
     {_, _, Patch} = another_version_detamination(),
     ?assertEqual(list_to_binary(Patch), patch()).
+
+parse_18_1_test() ->
+    ?assertEqual({<<"18">>, <<"1">>, <<"">>},
+                 parse(<<"18.1">>)).
+
+parse_18_1_1_test() ->
+    ?assertEqual({<<"18">>, <<"1">>, <<"1">>},
+                 parse(<<"18.1.1">>)).
+
+parse_18_1_0_1_test() ->
+    ?assertEqual({<<"18">>, <<"1">>, <<"0.1">>},
+                 parse(<<"18.1.0.1">>)).
 
 version_to_binary_test() ->
     {Major, Minor, _} = another_version_detamination(),
