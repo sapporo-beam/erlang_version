@@ -5,15 +5,15 @@
 -endif.
 
 %% API exports
--export([version_to_binary/0,
-         major_version/0,
-         minor_version/0,
-         patch_version/0]).
+-export([full/0,
+         major/0,
+         minor/0,
+         patch/0]).
 
 %%====================================================================
 %% API functions
 %%====================================================================
-version_to_binary() ->
+full() ->
     % See also
     % http://www.erlang.org/doc/system_principles/versions.html
     % "Retrieving Current OTP Version"
@@ -22,16 +22,16 @@ version_to_binary() ->
     % Strip <<"\n">>
     binary:part(Binary, 0, byte_size(Binary) - 1).
 
-major_version() ->
-    [Major, _ | _] = binary:split(version_to_binary(), <<".">>),
+major() ->
+    [Major, _ | _] = binary:split(full(), <<".">>),
     Major.
 
-minor_version() ->
-    [_, Minor | _] = binary:split(version_to_binary(), <<".">>),
+minor() ->
+    [_, Minor | _] = binary:split(full(), <<".">>),
     Minor.
 
-patch_version() ->
-    [_, _ | Patch] = binary:split(version_to_binary(), <<".">>),
+patch() ->
+    [_, _ | Patch] = binary:split(full(), <<".">>),
     case Patch of
         [] -> <<"">>;
         true -> Patch
@@ -62,18 +62,18 @@ another_version_detamination() ->
 
 major_version_test() ->
     {Major, _, _} = another_version_detamination(),
-    ?assertEqual(list_to_binary(Major), major_version()).
+    ?assertEqual(list_to_binary(Major), major()).
 
 minor_version_test() ->
     {_, Minor, _} = another_version_detamination(),
-    ?assertEqual(list_to_binary(Minor), minor_version()).
+    ?assertEqual(list_to_binary(Minor), minor()).
 
 patch_version_test() ->
     {_, _, Patch} = another_version_detamination(),
-    ?assertEqual(list_to_binary(Patch), patch_version()).
+    ?assertEqual(list_to_binary(Patch), patch()).
 
 version_to_binary_test() ->
     {Major, Minor, _} = another_version_detamination(),
     Full = string:join([Major, Minor], "."),
-    ?assertEqual(list_to_binary(Full), version_to_binary()).
+    ?assertEqual(list_to_binary(Full), full()).
 -endif.
