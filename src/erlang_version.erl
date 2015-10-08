@@ -1,9 +1,5 @@
 -module('erlang_version').
 
--ifdef(TEST).
--include_lib("eunit/include/eunit.hrl").
--endif.
-
 %% API exports
 -export([full/0,
          major/0,
@@ -45,6 +41,8 @@ patch() ->
 %% Tests
 %%====================================================================
 -ifdef(TEST).
+-include_lib("eunit/include/eunit.hrl").
+
 another_version_detamination() ->
     Pathnames = lists:reverse(string:tokens(code:root_dir(), "/")),
     [Match|_] = lists:filtermap(fun(Pathname) ->
