@@ -10,6 +10,7 @@
 %%====================================================================
 %% API functions
 %%====================================================================
+-spec full() -> binary().
 full() ->
     % See also
     % http://www.erlang.org/doc/system_principles/versions.html
@@ -19,18 +20,22 @@ full() ->
     % Strip <<"\n">>
     binary:part(Binary, 0, byte_size(Binary) - 1).
 
+-spec major() -> binary().
 major() ->
     {Major, _, _} = parse(full()),
     Major.
 
+-spec minor() -> binary().
 minor() ->
     {_, Minor, _} = parse(full()),
     Minor.
 
+-spec patch() -> binary().
 patch() ->
     {_, _, Patch} = parse(full()),
     Patch.
 
+-spec parse(binary()) -> {binary(), binary(), binary()}.
 parse(Bin) ->
     case do_parse(Bin) of
         [Major, Minor]        -> {Major, Minor, <<"">>};
