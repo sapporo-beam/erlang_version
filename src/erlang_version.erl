@@ -73,15 +73,15 @@ full_test() ->
            end,
     ?assertEqual(list_to_binary(Full), full()).
 
-major_version_test() ->
+major_test() ->
     {Major, _, _} = another_version_detamination(),
     ?assertEqual(list_to_binary(Major), major()).
 
-minor_version_test() ->
+minor_test() ->
     {_, Minor, _} = another_version_detamination(),
     ?assertEqual(list_to_binary(Minor), minor()).
 
-patch_version_test() ->
+patch_test() ->
     {_, _, Patch} = another_version_detamination(),
     ?assertEqual(list_to_binary(Patch), patch()).
 
