@@ -7,7 +7,8 @@
 %% API exports
 -export([version_to_binary/0,
          major_version/0,
-         minor_version/0]).
+         minor_version/0,
+         patch_version/0]).
 
 %%====================================================================
 %% API functions
@@ -28,6 +29,13 @@ major_version() ->
 minor_version() ->
     [_, Minor | _] = binary:split(version_to_binary(), <<".">>),
     Minor.
+
+patch_version() ->
+    [_, _ | Patch] = binary:split(version_to_binary(), <<".">>),
+    case Patch of
+        [] -> <<"">>;
+        true -> Patch
+    end.
 
 %%====================================================================
 %% Internal functions
@@ -59,6 +67,10 @@ major_version_test() ->
 minor_version_test() ->
     {_, Minor, _} = another_version_detamination(),
     ?assertEqual(list_to_binary(Minor), minor_version()).
+
+patch_version_test() ->
+    {_, _, Patch} = another_version_detamination(),
+    ?assertEqual(list_to_binary(Patch), patch_version()).
 
 version_to_binary_test() ->
     {Major, Minor, _} = another_version_detamination(),
