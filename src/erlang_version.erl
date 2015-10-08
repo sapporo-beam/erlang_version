@@ -20,19 +20,16 @@ full() ->
     binary:part(Binary, 0, byte_size(Binary) - 1).
 
 major() ->
-    [Major, _ | _] = binary:split(full(), <<".">>),
+    {Major, _, _} = parse(full()),
     Major.
 
 minor() ->
-    [_, Minor | _] = binary:split(full(), <<".">>),
+    {_, Minor, _} = parse(full()),
     Minor.
 
 patch() ->
-    [_, _ | Patch] = binary:split(full(), <<".">>),
-    case Patch of
-        [] -> <<"">>;
-        true -> Patch
-    end.
+    {_, _, Patch} = parse(full()),
+    Patch.
 
 parse(Bin) ->
     case do_parse(Bin) of
