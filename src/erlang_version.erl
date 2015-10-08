@@ -66,6 +66,13 @@ another_version_detamination() ->
                                 end, Pathnames),
     Match.
 
+full_test() ->
+    Full = case another_version_detamination() of
+               {Major, Minor, ""}   -> string:join([Major, Minor], ".");
+               {Major, Minor, Rest} -> string:join([Major, Minor, Rest], ".")
+           end,
+    ?assertEqual(list_to_binary(Full), full()).
+
 major_version_test() ->
     {Major, _, _} = another_version_detamination(),
     ?assertEqual(list_to_binary(Major), major()).
@@ -89,9 +96,4 @@ parse_18_1_1_test() ->
 parse_18_1_0_1_test() ->
     ?assertEqual({<<"18">>, <<"1">>, <<"0.1">>},
                  parse(<<"18.1.0.1">>)).
-
-version_to_binary_test() ->
-    {Major, Minor, _} = another_version_detamination(),
-    Full = string:join([Major, Minor], "."),
-    ?assertEqual(list_to_binary(Full), full()).
 -endif.
