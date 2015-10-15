@@ -1,3 +1,4 @@
+%% @doc Retrieve Erlang/OTP version like `18.1'.
 -module('erlang_version').
 
 %% API exports
@@ -10,6 +11,8 @@
 %%====================================================================
 %% API functions
 %%====================================================================
+
+%% @doc Return full version of Erlang/OTP.
 -spec full() -> binary().
 full() ->
     % See also
@@ -20,21 +23,41 @@ full() ->
     % Strip <<"\n">>
     binary:part(Binary, 0, byte_size(Binary) - 1).
 
+%% @doc Return major version of Erlang/OTP.
 -spec major() -> binary().
 major() ->
     {Major, _, _} = parse(full()),
     Major.
 
+%% @doc Return minor version of Erlang/OTP.
 -spec minor() -> binary().
 minor() ->
     {_, Minor, _} = parse(full()),
     Minor.
 
+%% @doc Return patch version of Erlang/OTP.
+%%
+%% When patch version isn't declered, this function returns empty binary `<<>>'.
+%%
+%% When patch version includes many periods, this function returns binary which includes many periods like `<<"0.1">>'.
 -spec patch() -> binary().
 patch() ->
     {_, _, Patch} = parse(full()),
     Patch.
 
+%% @doc Parse binary as Erlang/OTP version.
+%%
+%% When patch version isn't declered, third element of the tuple is empty binary `<<"">>'. following like:
+%%
+%% ```
+%% parse(<<"18.1">>) # => {<<"18">>, <<"1">>, <<>>}
+%% '''
+%%
+%% When patch version includes many periods, third element of the tuple just returns it. following like:
+%%
+%% ```
+%% parse(<<"18.1.0.1">>) # => {<<"18">>, <<"1">>, <<"0.1">>}
+%% '''
 -spec parse(binary()) -> {binary(), binary(), binary()}.
 parse(Bin) ->
     case do_parse(Bin) of
