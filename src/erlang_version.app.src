@@ -1,5 +1,5 @@
 {application, 'erlang_version',
- [{description, "An OTP library"},
+ [{description, "Retrieve Erlang/OTP version like `18.1'"},
   {vsn, "0.1.0"},
   {registered, []},
   {applications,
@@ -8,8 +8,7 @@
    ]},
   {env,[]},
   {modules, []},
-
-  {contributors, []},
-  {licenses, []},
-  {links, []}
+  {maintainers, ["niku"]},
+  {licenses, ["MIT"]},
+  {links, [{"Github", "https://github.com/sapporo-beam/erlang_version"}]}
  ]}.
