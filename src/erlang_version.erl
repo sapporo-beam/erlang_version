@@ -3,6 +3,7 @@
 
 %% API exports
 -export([full/0,
+         to_tuple/0,
          major/0,
          minor/0,
          patch/0,
@@ -22,6 +23,11 @@ full() ->
     {ok, Binary} = file:read_file(Filepath),
     % Strip <<"\n">>
     binary:part(Binary, 0, byte_size(Binary) - 1).
+
+%% @doc Return parsed version of Erlang/OTP.
+-spec to_tuple() -> {binary(), binary(), binary()}.
+to_tuple() ->
+    parse(full()).
 
 %% @doc Return major version of Erlang/OTP.
 -spec major() -> binary().
@@ -100,6 +106,10 @@ full_test() ->
                {Major, Minor, Rest} -> string:join([Major, Minor, Rest], ".")
            end,
     ?assertEqual(list_to_binary(Full), full()).
+
+to_tuple_test() ->
+    {Major, Minor, Rest} =  another_version_detamination(),
+    ?assertEqual({list_to_binary(Major), list_to_binary(Minor), list_to_binary(Rest)}, to_tuple()).
 
 major_test() ->
     {Major, _, _} = another_version_detamination(),
