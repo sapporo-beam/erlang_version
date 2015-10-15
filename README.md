@@ -20,11 +20,13 @@ Erlang/OTP 18 [erts-7.1] [source] [64-bit] [smp:4:4] [async-threads:0] [hipe] [k
 Eshell V7.1  (abort with ^G)
 1> erlang_version:full().
 <<"18.1">>
-2> erlang_version:major().
+2> erlang_version:to_tuple().
+{<<"18">>,<<"1">>,<<>>}
+3> erlang_version:major().
 <<"18">>
-3> erlang_version:minor().
+4> erlang_version:minor().
 <<"1">>
-4> erlang_version:patch().
+5> erlang_version:patch().
 <<>>
 ```
 
