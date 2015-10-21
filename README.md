@@ -6,10 +6,12 @@ Retrieve Erlang/OTP version like `18.1`.
 
 ## Requirements
 
-- Erlang/OTP (17.0 or later)
-- rebar3
+- Erlang/OTP 17.0 or later
+- (for development) rebar3
 
 ## Usage
+
+### As independent shell
 
 ```
 $ git clone https://github.com/sapporo-beam/erlang_version.git
@@ -28,6 +30,40 @@ Eshell V7.1  (abort with ^G)
 <<"1">>
 5> erlang_version:patch().
 <<>>
+```
+
+### From Erlang
+
+```
+$ cat rebar.config
+{erl_opts, [debug_info]}.
+{deps, [
+  erlang_version
+]}.
+$ rebar3 shell
+Erlang/OTP 18 [erts-7.1] [source] [64-bit] [smp:4:4] [async-threads:0] [hipe] [kernel-poll:false] [dtrace]
+
+Eshell V7.1  (abort with ^G)
+1> erlang_version:to_tuple().
+{<<"18">>,<<"1">>,<<>>}
+```
+
+### From Elixir
+
+```
+$ cat mix.exs
+(snip)
+  defp deps do
+    [{:erlang_version, "~> 0.2"}]
+  end
+end
+$ mix deps.get
+$ iex -S mix
+Erlang/OTP 18 [erts-7.1] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
+
+Interactive Elixir (1.1.1) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> :erlang_version.to_tuple
+{"18", "1", ""}
 ```
 
 ## License
