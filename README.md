@@ -1,6 +1,6 @@
 # erlang_version
 
-[![Build Status](https://travis-ci.org/niku/erlang_version.svg?branch=master)](https://travis-ci.org/niku/erlang_version)
+[![Build Status](https://travis-ci.org/sapporo-beam/erlang_version.svg?branch=master)](https://travis-ci.org/sapporo-beam/erlang_version)
 
 Retrieve Erlang/OTP version like `18.1`.
 
@@ -12,7 +12,7 @@ Retrieve Erlang/OTP version like `18.1`.
 ## Usage
 
 ```
-$ git clone https://github.com/niku/erlang_version.git
+$ git clone https://github.com/sapporo-beam/erlang_version.git
 $ cd erlang_version
 $ rebar3 shell
 Erlang/OTP 18 [erts-7.1] [source] [64-bit] [smp:4:4] [async-threads:0] [hipe] [kernel-poll:false] [dtrace]
